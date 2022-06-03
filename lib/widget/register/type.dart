@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kelompok/provider/add_screen_provider.dart';
 import 'package:kelompok/widget/app_types.dart';
 import 'package:kelompok/provider/type_provider.dart';
-import 'package:kelompok/provider/app_item_provider.dart';
 import 'package:kelompok/widget/register/offline/player_information.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +17,13 @@ class type extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Masukkan Nama Aplikasi'),
         Container(
           margin: EdgeInsets.only(
             bottom: MediaQuery.of(context).size.height * 0.025,
           ),
           child: TextFormField(
             controller: nameController,
+            decoration: InputDecoration(labelText: 'Masukkan Nama Aplikasi'),
           ),
         ),
         Text('Mode :'),
