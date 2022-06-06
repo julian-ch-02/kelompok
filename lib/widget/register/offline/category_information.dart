@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kelompok/provider/app_item_provider.dart';
+import 'package:kelompok/provider/type_provider.dart';
+import 'package:kelompok/widget/register/type.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/add_screen_provider.dart';
 import 'package:kelompok/widget/register/offline/other_information.dart';
@@ -22,6 +25,14 @@ class _category_informationState extends State<category_information> {
   final categoryController = TextEditingController();
 
   @override
+  void initState() {
+    Map tmpItem = context.read<app_item_provider>().getTempItem;
+    categoryController.text =
+        tmpItem['category'] == '' ? 'Keamanan' : tmpItem['category'];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -34,10 +45,11 @@ class _category_informationState extends State<category_information> {
                 ),
                 child: DropdownButtonFormField(
                   onChanged: (e) {
-                    setState(() {
-                      categoryController.text = e.toString();
+                    context.read<app_item_provider>().setNewItem({
+                      'category': e.toString(),
                     });
                   },
+                  value: categoryController.text,
                   items: _categories.map(
                     (category) {
                       return DropdownMenuItem(
@@ -51,18 +63,6 @@ class _category_informationState extends State<category_information> {
                   ),
                 ),
               ),
-              if (categoryController.text == 'Lainnya')
-                Container(
-                  margin: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height * 0.025,
-                  ),
-                  child: TextFormField(
-                    controller: categoryController,
-                    decoration: InputDecoration(
-                      labelText: categoryController.text,
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -87,7 +87,12 @@ class _category_informationState extends State<category_information> {
             ),
             ElevatedButton(
               child: Text('Next'),
-              onPressed: () {},
+              onPressed: () {
+                context.read<app_item_provider>().addNewItem();
+                Navigator.of(context).pop();
+                context.read<add_screen_provider>().setScreen(type());
+                context.read<type_provider>().setItem('');
+              },
             ),
           ],
         )

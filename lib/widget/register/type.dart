@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/provider/add_screen_provider.dart';
+import 'package:kelompok/provider/app_item_provider.dart';
 import 'package:kelompok/widget/app_types.dart';
 import 'package:kelompok/provider/type_provider.dart';
 import 'package:kelompok/widget/register/offline/player_information.dart';
 import 'package:provider/provider.dart';
 
-class type extends StatelessWidget {
+class type extends StatefulWidget {
   type({Key? key}) : super(key: key);
 
+  @override
+  State<type> createState() => _typeState();
+}
+
+class _typeState extends State<type> {
   final nameController = TextEditingController();
+
+  @override
+  void initState() {
+    Map tmpItem = context.read<app_item_provider>().getTempItem;
+    nameController.text = tmpItem['name'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +36,11 @@ class type extends StatelessWidget {
           ),
           child: TextFormField(
             controller: nameController,
+            onChanged: (value) {
+              context.read<app_item_provider>().setNewItem({
+                'name': nameController.text,
+              });
+            },
             decoration: InputDecoration(labelText: 'Masukkan Nama Aplikasi'),
           ),
         ),
@@ -51,6 +69,9 @@ class type extends StatelessWidget {
             ElevatedButton(
               child: Text('Next'),
               onPressed: () {
+                context.read<app_item_provider>().setNewItem({
+                  'type': item == 'online' ? true : false,
+                });
                 context
                     .read<add_screen_provider>()
                     .setScreen(player_information());

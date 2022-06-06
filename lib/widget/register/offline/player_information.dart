@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:kelompok/provider/app_item_provider.dart';
 import 'package:kelompok/widget/register/type.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/add_screen_provider.dart';
 import 'package:kelompok/widget/register/offline/other_information.dart';
 
-class player_information extends StatelessWidget {
+class player_information extends StatefulWidget {
   player_information({Key? key}) : super(key: key);
 
+  @override
+  State<player_information> createState() => _player_informationState();
+}
+
+class _player_informationState extends State<player_information> {
   final usernameController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    Map tmpItem = context.read<app_item_provider>().getTempItem;
+    usernameController.text = tmpItem['usernamePlayer'];
+    passwordController.text = tmpItem['passwordPlayer'];
+    emailController.text = tmpItem['emailPlayer'];
+    phoneController.text = tmpItem['phonePlayer'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +45,11 @@ class player_information extends StatelessWidget {
                   ),
                   child: TextFormField(
                     controller: usernameController,
+                    onChanged: (value) {
+                      context.read<app_item_provider>().setNewItem({
+                        'usernamePlayer': usernameController.text,
+                      });
+                    },
                     decoration: InputDecoration(labelText: 'Username'),
                   ),
                 ),
@@ -35,6 +59,11 @@ class player_information extends StatelessWidget {
                   ),
                   child: TextFormField(
                     controller: passwordController,
+                    onChanged: (value) {
+                      context.read<app_item_provider>().setNewItem({
+                        'passwordPlayer': passwordController.text,
+                      });
+                    },
                     obscureText: true,
                     decoration: InputDecoration(labelText: 'Password'),
                   ),
@@ -45,6 +74,11 @@ class player_information extends StatelessWidget {
                   ),
                   child: TextFormField(
                     controller: emailController,
+                    onChanged: (value) {
+                      context.read<app_item_provider>().setNewItem({
+                        'emailPlayer': emailController.text,
+                      });
+                    },
                     decoration: InputDecoration(labelText: 'Email'),
                   ),
                 ),
@@ -54,6 +88,11 @@ class player_information extends StatelessWidget {
                   ),
                   child: TextFormField(
                     controller: phoneController,
+                    onChanged: (value) {
+                      context.read<app_item_provider>().setNewItem({
+                        'phonePlayer': phoneController.text,
+                      });
+                    },
                     decoration: InputDecoration(labelText: 'Phone'),
                   ),
                 ),
