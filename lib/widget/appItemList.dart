@@ -1,10 +1,10 @@
-import 'dart:io';
+//import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kelompok/model/appItem.dart';
 import 'package:kelompok/widget/item.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+//import 'package:image_picker/image_picker.dart';
+//import 'package:path_provider/path_provider.dart';
+//import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
 
@@ -48,8 +48,7 @@ class appItemList extends StatelessWidget {
                 //),
                 //);
                 return item(
-                  title: offlineApp.toList()[index].name,
-                  image: offlineApp.toList()[index].image,
+                  passedItem: offlineApp.toList()[index],
                 );
               },
             ),
@@ -60,8 +59,7 @@ class appItemList extends StatelessWidget {
               itemCount: onlineApp.length,
               itemBuilder: (context, index) {
                 return item(
-                  title: onlineApp.toList()[index].name,
-                  image: onlineApp.toList()[index].image,
+                  passedItem: onlineApp.toList()[index],
                 );
               },
             ),

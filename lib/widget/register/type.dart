@@ -4,6 +4,7 @@ import 'package:kelompok/provider/app_item_provider.dart';
 import 'package:kelompok/widget/app_types.dart';
 import 'package:kelompok/provider/type_provider.dart';
 import 'package:kelompok/widget/register/offline/player_information.dart';
+import 'package:kelompok/widget/register/online/available_item.dart';
 import 'package:provider/provider.dart';
 
 class type extends StatefulWidget {
@@ -69,12 +70,21 @@ class _typeState extends State<type> {
             ElevatedButton(
               child: Text('Next'),
               onPressed: () {
-                context.read<app_item_provider>().setNewItem({
-                  'type': item == 'online' ? true : false,
-                });
-                context
-                    .read<add_screen_provider>()
-                    .setScreen(player_information());
+                if (item == 'online') {
+                  context.read<app_item_provider>().setNewItem({
+                    'type': true,
+                  });
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => available_item(),
+                    ),
+                  );
+                } else {
+                  context.read<app_item_provider>().setNewItem({
+                    'type': false,
+                  });
+                  context.read<add_screen_provider>().setScreen(player_information());
+                }
               },
             ),
           ],

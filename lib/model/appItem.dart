@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class appItem {
+  int id;
   late final String name;
   late final String usernamePlayer;
   late final String passwordPlayer;
@@ -12,6 +13,7 @@ class appItem {
   late final bool type;
 
   appItem({
+    this.id = 0,
     required this.name,
     required this.image,
     required this.type,
@@ -25,6 +27,7 @@ class appItem {
 
   factory appItem.fromMap(Map map) {
     return appItem(
+      id: map['id'] as int,
       name: map['name'] as String,
       image: map['image'] as String,
       type: map['type'] as bool,
@@ -35,5 +38,20 @@ class appItem {
       description: map['description'] as String,
       category: map['category'] as String,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+      'type': type,
+      'usernamePlayer': usernamePlayer,
+      'passwordPlayer': passwordPlayer,
+      'emailPlayer': emailPlayer,
+      'phonePlayer': phonePlayer,
+      'description': description,
+      'category': category,
+    };
   }
 }

@@ -120,9 +120,7 @@ class _player_informationState extends State<player_information> {
             ElevatedButton(
               child: Text('Next'),
               onPressed: () {
-                context
-                    .read<add_screen_provider>()
-                    .setScreen(other_information());
+                context.read<add_screen_provider>().setScreen(other_information());
               },
             ),
           ],
