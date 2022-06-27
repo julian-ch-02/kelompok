@@ -1,25 +1,11 @@
-//import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kelompok/model/appItem.dart';
 import 'package:kelompok/widget/item.dart';
-//import 'package:image_picker/image_picker.dart';
-//import 'package:path_provider/path_provider.dart';
-//import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
 
 class appItemList extends StatelessWidget {
   appItemList({Key? key}) : super(key: key);
-
-  //_getFromGallery() async {
-  //PickedFile? pickedFile = await ImagePicker().getImage(source: ImageSource.gallery, maxWidth: 1800, maxHeight: 1800);
-  //if (pickedFile != null) {
-  //File imageFile = File(pickedFile.path);
-  //final directory = await getApplicationDocumentsDirectory();
-  //String fileName = basename(imageFile.path);
-  //File localImage = await imageFile.copy('${directory.path}/$fileName');
-  //}
-  //}
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +22,6 @@ class appItemList extends StatelessWidget {
             child: ListView.builder(
               itemCount: offlineApp.length,
               itemBuilder: (context, index) {
-                //return Semantics(
-                //label: 'image_picker_example_from_gallery',
-                //child: FloatingActionButton(
-                //onPressed: () {
-                //_getFromGallery();
-                //},
-                //heroTag: 'image0',
-                //tooltip: 'Pick Image from gallery',
-                //child: const Icon(Icons.photo),
-                //),
-                //);
                 return item(
                   passedItem: offlineApp.toList()[index],
                 );

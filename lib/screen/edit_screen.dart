@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
@@ -35,6 +36,26 @@ class edit_screen extends StatelessWidget {
         ),
         child: Column(
           children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.05,
+                bottom: MediaQuery.of(context).size.height * 0.025,
+              ),
+              child: CircleAvatar(
+                radius: 40,
+                child: objectItem['image'] != ''
+                    ? const SizedBox()
+                    : Text(
+                        objectItem['name'] == '' ? '' : objectItem['name'][0],
+                        style: TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                backgroundImage: FileImage(
+                  File(objectItem['image']),
+                ),
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(
                 bottom: MediaQuery.of(context).size.height * 0.025,

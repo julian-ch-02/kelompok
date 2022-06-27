@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
 import 'package:kelompok/provider/type_provider.dart';
@@ -5,6 +6,8 @@ import 'package:kelompok/widget/register/type.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/add_screen_provider.dart';
 import 'package:kelompok/widget/register/offline/other_information.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 
 class category_information extends StatefulWidget {
   category_information({Key? key}) : super(key: key);
@@ -14,21 +17,33 @@ class category_information extends StatefulWidget {
 }
 
 class _category_informationState extends State<category_information> {
-  final List<String> _categories = [
-    'Keamanan',
-    'Permainan',
-    'Musik',
-    'Shopping',
-    'Lainnya'
-  ];
+  final List<String> _categories = ['Keamanan', 'Permainan', 'Musik', 'Shopping', 'Lainnya'];
 
   final categoryController = TextEditingController();
+
+  File? image;
+  String? imagePath;
+
+  Future _getImageFromGallery() async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (image == null) return;
+
+    final imageTemp = File(image.path);
+    setState(
+      () {
+        this.image = imageTemp;
+        this.imagePath = image.path;
+      },
+    );
+  }
 
   @override
   void initState() {
     Map tmpItem = context.read<app_item_provider>().getTempItem;
-    categoryController.text =
-        tmpItem['category'] == '' ? 'Keamanan' : tmpItem['category'];
+    categoryController.text = tmpItem['category'] == '' ? 'Keamanan' : tmpItem['category'];
     super.initState();
   }
 
@@ -63,6 +78,27 @@ class _category_informationState extends State<category_information> {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () async {
+                  await _getImageFromGallery();
+                  context.read<app_item_provider>().setNewItem({
+                    'image': imagePath,
+                  });
+                },
+                child: Card(
+                  child: image == null
+                      ? Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          child: Center(
+                            child: Icon(
+                              Icons.camera,
+                            ),
+                          ),
+                        )
+                      : Image.file(image!),
+                ),
+              ),
             ],
           ),
         ),
@@ -76,9 +112,7 @@ class _category_informationState extends State<category_information> {
               child: ElevatedButton(
                 child: Text('Back'),
                 onPressed: () {
-                  context
-                      .read<add_screen_provider>()
-                      .setScreen(other_information());
+                  context.read<add_screen_provider>().setScreen(other_information());
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.green,

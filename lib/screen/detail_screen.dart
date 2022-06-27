@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kelompok/model/appItem.dart';
 import 'package:kelompok/screen/edit_screen.dart';
@@ -47,6 +48,25 @@ class detail_screen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.05,
+                ),
+                child: CircleAvatar(
+                  radius: 40,
+                  child: passedItem.image != ''
+                      ? const SizedBox()
+                      : Text(
+                          passedItem.name == '' ? '' : passedItem.name[0],
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
+                        ),
+                  backgroundImage: FileImage(
+                    File(passedItem.image),
+                  ),
+                ),
+              ),
               Card(
                 elevation: 15,
                 shape: RoundedRectangleBorder(

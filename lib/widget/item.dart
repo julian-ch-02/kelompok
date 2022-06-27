@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
@@ -18,7 +19,16 @@ class item extends StatelessWidget {
         title: Text(passedItem.name),
         leading: Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(passedItem.image),
+          child: CircleAvatar(
+            child: passedItem.image != ''
+                ? const SizedBox()
+                : Text(
+                    passedItem.name == '' ? '' : passedItem.name[0],
+                  ),
+            backgroundImage: FileImage(
+              File(passedItem.image),
+            ),
+          ),
         ),
         trailing: isTrailing ? (Icon(Icons.arrow_right)) : (null),
         onTap: () {
