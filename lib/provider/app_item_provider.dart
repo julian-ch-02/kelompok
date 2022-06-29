@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kelompok/model/appItem.dart';
 
 class app_item_provider extends ChangeNotifier {
+  List _searchItems = [];
+  List _sortedItems = [];
+  int _count = 0;
+
   List<appItem> _items = [
     appItem(
       id: 0,
@@ -45,9 +49,31 @@ class app_item_provider extends ChangeNotifier {
       phonePlayer: 'tes',
     ),
   ];
-  get getAllItems => _items;
+  get getAllItems => _count == 0 ? _items : _searchItems;
 
   get getOnlineItem => _onlineItems;
+
+  void searching(String val) {
+    _searchItems.clear();
+    _searchItems = _items
+        .where(
+          (item) => item.name.toLowerCase().contains(
+                val.toLowerCase(),
+              ),
+        )
+        .toList();
+    _count = val.length;
+    notifyListeners();
+  }
+
+  void sorting() {
+    _items.sort(
+      (a, b) => a.name.toLowerCase().compareTo(
+            b.name.toLowerCase(),
+          ),
+    );
+    notifyListeners();
+  }
 
   Map temp = {
     'name': '',

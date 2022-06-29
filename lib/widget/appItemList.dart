@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kelompok/model/appItem.dart';
 import 'package:kelompok/widget/item.dart';
+import 'package:kelompok/widget/search.dart';
+import 'package:kelompok/widget/sort.dart';
 import 'package:provider/provider.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
 
@@ -10,14 +12,24 @@ class appItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<appItem> _items = context.watch<app_item_provider>().getAllItems;
+
     Iterable offlineApp = _items.where((item) => item.type == false);
+
     Iterable onlineApp = _items.where((item) => item.type == true);
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('offline (${offlineApp.length})'),
+          search(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('offline (${offlineApp.length})'),
+              sort(),
+            ],
+          ),
           Flexible(
             child: ListView.builder(
               itemCount: offlineApp.length,
