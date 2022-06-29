@@ -7,7 +7,9 @@ class privacy_verification_widget extends StatelessWidget {
       body: Container(
           alignment: FractionalOffset.topCenter,
           child: Padding(
-              padding: EdgeInsets.fromLTRB(50, 20, 20, 100),
+              padding: EdgeInsets.all(
+                20,
+              ),
               child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),

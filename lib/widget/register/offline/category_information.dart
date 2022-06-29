@@ -49,88 +49,93 @@ class _category_informationState extends State<category_information> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.025,
-                ),
-                child: DropdownButtonFormField(
-                  onChanged: (e) {
-                    context.read<app_item_provider>().setNewItem({
-                      'category': e.toString(),
-                    });
-                  },
-                  value: categoryController.text,
-                  items: _categories.map(
-                    (category) {
-                      return DropdownMenuItem(
-                        child: Text(category),
-                        value: category,
-                      );
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.025,
+                    ),
+                    child: DropdownButtonFormField(
+                      onChanged: (e) {
+                        context.read<app_item_provider>().setNewItem({
+                          'category': e.toString(),
+                        });
+                      },
+                      value: categoryController.text,
+                      items: _categories.map(
+                        (category) {
+                          return DropdownMenuItem(
+                            child: Text(category),
+                            value: category,
+                          );
+                        },
+                      ).toList(),
+                      decoration: InputDecoration(
+                        labelText: 'Jenis Aplikasi',
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await _getImageFromGallery();
+                      context.read<app_item_provider>().setNewItem({
+                        'image': imagePath,
+                      });
                     },
-                  ).toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Jenis Aplikasi',
+                    child: Card(
+                      child: image == null
+                          ? Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              child: Center(
+                                child: Icon(
+                                  Icons.camera,
+                                ),
+                              ),
+                            )
+                          : Image.file(image!),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.01,
+                  ),
+                  child: ElevatedButton(
+                    child: Text('Back'),
+                    onPressed: () {
+                      context.read<add_screen_provider>().setScreen(other_information());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                    ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await _getImageFromGallery();
-                  context.read<app_item_provider>().setNewItem({
-                    'image': imagePath,
-                  });
-                },
-                child: Card(
-                  child: image == null
-                      ? Container(
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          height: MediaQuery.of(context).size.height * 0.5,
-                          child: Center(
-                            child: Icon(
-                              Icons.camera,
-                            ),
-                          ),
-                        )
-                      : Image.file(image!),
+                ElevatedButton(
+                  child: Text('Next'),
+                  onPressed: () {
+                    context.read<app_item_provider>().addNewItem();
+                    Navigator.of(context).pop();
+                    context.read<add_screen_provider>().setScreen(type());
+                    context.read<type_provider>().setItem('');
+                  },
                 ),
-              ),
-            ],
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.01,
-              ),
-              child: ElevatedButton(
-                child: Text('Back'),
-                onPressed: () {
-                  context.read<add_screen_provider>().setScreen(other_information());
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                ),
-              ),
-            ),
-            ElevatedButton(
-              child: Text('Next'),
-              onPressed: () {
-                context.read<app_item_provider>().addNewItem();
-                Navigator.of(context).pop();
-                context.read<add_screen_provider>().setScreen(type());
-                context.read<type_provider>().setItem('');
-              },
-            ),
+              ],
+            )
           ],
-        )
-      ],
+        ),
+      ),
     );
   }
 }

@@ -72,7 +72,9 @@ class _security_widgetState extends State<security_widget> {
                   if (securityItems[index]['text'] == 'Ganti Pin') {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => pin_screen(),
+                        builder: (context) => pin_screen(
+                          type: "set",
+                        ),
                       ),
                     );
                   }

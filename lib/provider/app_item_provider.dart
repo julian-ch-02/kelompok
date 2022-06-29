@@ -29,7 +29,7 @@ class app_item_provider extends ChangeNotifier {
     appItem(
       name: 'Clash of Clans',
       image: '',
-      type: false,
+      type: true,
       usernamePlayer: 'tes',
       passwordPlayer: 'tes',
       emailPlayer: 'tes',

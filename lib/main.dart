@@ -3,6 +3,7 @@ import 'package:kelompok/provider/theme_provider.dart';
 import 'package:kelompok/provider/type_provider.dart';
 import 'package:kelompok/provider/app_item_provider.dart';
 import 'package:kelompok/provider/add_screen_provider.dart';
+import 'package:kelompok/provider/pin_provider.dart';
 import 'package:kelompok/screen/main_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,9 @@ void main() {
         ),
         ChangeNotifierProvider<add_screen_provider>(
           create: (_) => add_screen_provider(),
+        ),
+        ChangeNotifierProvider<pin_provider>(
+          create: (_) => pin_provider(),
         )
       ],
       child: const MyApp(),
@@ -40,6 +44,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.w800,
+          ),
+          headline6: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         switchTheme: SwitchThemeData(
           trackColor: MaterialStateProperty.all(
             Colors.blue[900],
@@ -48,6 +61,15 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         primarySwatch: Colors.grey,
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.w800,
+          ),
+          headline6: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         switchTheme: SwitchThemeData(
           thumbColor: MaterialStateProperty.all(
             Colors.black,
